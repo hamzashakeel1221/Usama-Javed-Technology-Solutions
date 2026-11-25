@@ -1,0 +1,40 @@
+{
+  // Ctrl+Shift+B starts the API (http://localhost:5277) and the website (http://localhost:5173).
+  // Stop a server with Ctrl+C in its terminal, or "Tasks: Terminate Task".
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "UJ: API",
+      "type": "shell",
+      "command": "dotnet run --project UJ.Api",
+      "options": { "cwd": "${workspaceFolder}" },
+      "isBackground": true,
+      "presentation": { "panel": "dedicated", "reveal": "always", "group": "uj", "clear": true },
+      "problemMatcher": {
+        "owner": "uj-api",
+        "pattern": { "regexp": "^\\s*(error|fail):?\\s+(.*)$", "severity": 1, "message": 2 },
+        "background": { "activeBegins": true, "beginsPattern": "Building|info", "endsPattern": "Now listening on" }
+      }
+    },
+    {
+      "label": "UJ: Website",
+      "type": "shell",
+      "command": "npm run dev -- --host 127.0.0.1",
+      "options": { "cwd": "${workspaceFolder}/uj-web" },
+      "isBackground": true,
+      "presentation": { "panel": "dedicated", "reveal": "always", "group": "uj", "clear": true },
+      "problemMatcher": {
+        "owner": "uj-web",
+        "pattern": { "regexp": "^\\s*(ERROR|Error):?\\s+(.*)$", "severity": 1, "message": 2 },
+        "background": { "activeBegins": true, "beginsPattern": "VITE|vite|>", "endsPattern": "Local:|ready in" }
+      }
+    },
+    {
+      "label": "UJ: Run website",
+      "dependsOn": ["UJ: API", "UJ: Website"],
+      "dependsOrder": "parallel",
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": []
+    }
+  ]
+}
