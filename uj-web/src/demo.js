@@ -1,4 +1,4 @@
-// In-browser stand-in for UJ.Api, used only in development when the API is not running.
+// In-browser stand-in for the API, used only in development when the API is not running.
 // Data is kept in localStorage under "uj-demo-db". Clear it to start over.
 import { seedProjects } from './content.js'
 

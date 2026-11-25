@@ -1,0 +1,19 @@
+{
+  "name": "uj-website",
+  "private": true,
+  "version": "2.0.0",
+  "description": "Usama Javed Technology Solution: bilingual website and admin portal on Cloudflare Workers + D1",
+  "scripts": {
+    "build": "npm --prefix uj-web ci && npm --prefix uj-web run build",
+    "dev": "npm --prefix uj-web run dev",
+    "dev:api": "node -e \"require('fs').mkdirSync('dist',{recursive:true})\" && wrangler d1 migrations apply uj-website --local && wrangler dev --port 8787",
+    "preview": "npm run build && wrangler d1 migrations apply uj-website --local && wrangler dev --port 8787",
+    "deploy": "npm run build && npm run cf-deploy",
+    "cf-deploy": "wrangler deploy && wrangler d1 migrations apply uj-website --remote",
+    "db:migrate:local": "wrangler d1 migrations apply uj-website --local",
+    "db:migrate:remote": "wrangler d1 migrations apply uj-website --remote"
+  },
+  "devDependencies": {
+    "wrangler": "4.160.0"
+  }
+}

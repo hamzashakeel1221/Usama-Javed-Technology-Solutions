@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// The API runs on http://localhost:5277 (see UJ.Api/Properties/launchSettings.json).
-// In development Vite forwards /api and /uploads to it, so the browser sees one origin.
-const API = process.env.VITE_API_TARGET || 'http://localhost:5277'
+// The API is the Cloudflare Worker (worker/index.js). Locally it runs with `npm run dev:api`
+// on http://localhost:8787, and Vite forwards /api and /uploads to it so the browser sees one origin.
+const API = process.env.VITE_API_TARGET || 'http://localhost:8787'
 
 export default defineConfig({
   plugins: [react()],
@@ -15,8 +15,8 @@ export default defineConfig({
     },
   },
   build: {
-    // `npm run build` writes straight into the API's wwwroot so ASP.NET serves the site.
-    outDir: '../UJ.Api/wwwroot',
-    emptyOutDir: false, // keep wwwroot/uploads
+    // `npm run build` writes to ../dist, which Cloudflare serves as static assets (see wrangler.jsonc).
+    outDir: '../dist',
+    emptyOutDir: true,
   },
 })

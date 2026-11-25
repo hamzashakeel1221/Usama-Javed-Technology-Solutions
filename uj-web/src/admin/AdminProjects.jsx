@@ -106,7 +106,7 @@ function ProjectForm({ initial, onClose, onSaved }) {
   const uploadFile = async file => {
     if (!file) return
     if (!/\.(jpe?g|png|webp)$/i.test(file.name)) { setError('Only JPG, PNG or WEBP images.'); return }
-    if (file.size > 5 * 1024 * 1024) { setError('Image must be 5 MB or smaller.'); return }
+    if (file.size > 15 * 1024 * 1024) { setError('Image must be 15 MB or smaller.'); return }
     setUploading(true); setError('')
     try { const { url } = await api.uploadImage(file); setF(prev => ({ ...prev, imageUrl: url })) }
     catch (err) { setError(err.message || 'Upload failed.') }
@@ -157,7 +157,7 @@ function ProjectForm({ initial, onClose, onSaved }) {
             onDrop={e => { e.preventDefault(); setDrag(false); uploadFile(e.dataTransfer.files?.[0]) }}>
             {f.imageUrl ? <img src={imageSrc(f.imageUrl)} alt="" /> : <span className="thumb"><Icon name="image" size={28} /></span>}
             <div style={{ display: 'grid', gap: 8 }}>
-              <span className="muted small">Drag a photo here, or choose a file. JPG, PNG or WEBP, up to 5 MB.</span>
+              <span className="muted small">Drag a photo here, or choose a file. JPG, PNG or WEBP. Large photos are resized automatically.</span>
               <div className="row-gap">
                 <label className="btn btn-outline btn-xs" style={{ display: 'inline-flex' }}>
                   {uploading ? 'Uploading…' : f.imageUrl ? 'Replace image' : 'Choose image'}

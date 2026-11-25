@@ -1,19 +1,20 @@
 {
-  // Ctrl+Shift+B starts the API (http://localhost:5277) and the website (http://localhost:5173).
+  // Ctrl+Shift+B starts the API (http://localhost:8787) and the website (http://localhost:5173).
+  // First time only: run `npm install` in this folder and copy .dev.vars.example to .dev.vars.
   // Stop a server with Ctrl+C in its terminal, or "Tasks: Terminate Task".
   "version": "2.0.0",
   "tasks": [
     {
       "label": "UJ: API",
       "type": "shell",
-      "command": "dotnet run --project UJ.Api",
+      "command": "npm run dev:api",
       "options": { "cwd": "${workspaceFolder}" },
       "isBackground": true,
       "presentation": { "panel": "dedicated", "reveal": "always", "group": "uj", "clear": true },
       "problemMatcher": {
         "owner": "uj-api",
-        "pattern": { "regexp": "^\\s*(error|fail):?\\s+(.*)$", "severity": 1, "message": 2 },
-        "background": { "activeBegins": true, "beginsPattern": "Building|info", "endsPattern": "Now listening on" }
+        "pattern": { "regexp": "^\\s*(✘|ERROR):?\\s+(.*)$", "severity": 1, "message": 2 },
+        "background": { "activeBegins": true, "beginsPattern": "wrangler|Migrations", "endsPattern": "Ready on" }
       }
     },
     {

@@ -6,7 +6,7 @@ import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const root = path.dirname(fileURLToPath(import.meta.url))
-const out = path.resolve(root, '../UJ.Api/wwwroot')
+const out = path.resolve(root, '../dist')
 const { render, headHtml, PAGES, SITE_URL, urlFor } = await import(pathToFileURL(path.join(root, 'dist-ssr/entry-server.js')).href)
 
 const template = fs.readFileSync(path.join(out, 'index.html'), 'utf8')
@@ -28,7 +28,7 @@ for (const url of routes) {
   console.log('  prerendered', url)
 }
 
-// Real "page not found" page (the API sends it with a 404 status, so Google drops dead URLs)
+// Real "page not found" page (Cloudflare sends it with a 404 status, so Google drops dead URLs)
 fs.writeFileSync(path.join(out, '404.html'), template.replace('<!--app-head-->', headHtml('/404')).replace('<!--app-html-->', render('/404')))
 console.log('  prerendered 404.html')
 
